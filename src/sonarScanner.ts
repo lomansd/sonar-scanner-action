@@ -40,7 +40,7 @@ export const sonarScanner = async () => {
     `-Dsonar.scm.provider=${scmProvider}`,
     `-Dsonar.sourceEncoding=${sourceEncoding}`,
     `-Dsonar.qualitygate.wait=${runQualityGate}`,
-    `-Dsonar.projectversion=${projectVersion}`,
+    `-Dsonar.projectVersion=${projectVersion}`,
   ];
 
   if (baseDir && baseDir.length > 0) {
