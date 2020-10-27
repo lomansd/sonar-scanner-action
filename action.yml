@@ -69,3 +69,4 @@ outputs:
 runs:
   using: docker
   image: Dockerfile
+  main: 'dist/index.js'
