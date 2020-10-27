@@ -10,6 +10,7 @@ function getBranchOrTagName(githubRef: string): string {
 export const sonarScanner = async () => {
   const projectName = core.getInput('projectName', { required: true });
   const projectKey = core.getInput('projectKey', { required: true });
+  const projectVersion = core.getInput('projectVersion', { required: false });
   const baseDir = core.getInput('baseDir', { required: false });
   const token = core.getInput('token', { required: true });
   const url = core.getInput('url', { required: true });
@@ -39,6 +40,7 @@ export const sonarScanner = async () => {
     `-Dsonar.scm.provider=${scmProvider}`,
     `-Dsonar.sourceEncoding=${sourceEncoding}`,
     `-Dsonar.qualitygate.wait=${runQualityGate}`,
+    `-Dsonar_projectversion=${projectVersion}`,
   ];
 
   if (baseDir && baseDir.length > 0) {
@@ -56,6 +58,7 @@ export const sonarScanner = async () => {
 
     ProjectName                 : ${projectName}
     ProjectKey                  : ${projectKey}
+    ProjectVersion              : ${projectVersion}
     BaseDir                     : ${baseDir}
     Token                       : ${token}
     URL                         : ${url}
