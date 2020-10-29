@@ -3,8 +3,7 @@ import { context } from '@actions/github';
 import { exec } from '@actions/exec';
 
 function getBranchOrTagName(githubRef: string): string {
-  const githubRefParts = githubRef.split('/');
-  return githubRefParts[githubRefParts.length - 1];
+  return githubRef.replace("refs/heads/", "");
 }
 
 export const sonarScanner = async () => {
