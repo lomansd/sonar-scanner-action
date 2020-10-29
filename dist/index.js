@@ -2297,7 +2297,9 @@ const core = __importStar(__webpack_require__(470));
 const github_1 = __webpack_require__(469);
 const exec_1 = __webpack_require__(986);
 function getBranchOrTagName(githubRef) {
-    return githubRef.replace("refs/heads/", "");
+    const branchName = githubRef.replace("refs/heads/", "");
+    core.info(`GitHub branch reference  ${githubRef}, branchName= ${branchName}`);
+    return branchName;
 }
 exports.sonarScanner = async () => {
     const projectName = core.getInput('projectName', { required: true });
