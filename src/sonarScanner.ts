@@ -3,7 +3,9 @@ import { context } from '@actions/github';
 import { exec } from '@actions/exec';
 
 function getBranchOrTagName(githubRef: string): string {
-  return githubRef.replace("refs/heads/", "");
+  core.info(`GitHub branch reference  ${githubRef}`;
+  const branchName=githubRef.replace("refs/heads/", "");
+  return ;
 }
 
 export const sonarScanner = async () => {
