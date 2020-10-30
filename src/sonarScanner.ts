@@ -75,7 +75,7 @@ export const sonarScanner = async () => {
 
   const pr: any = context.payload.pull_request;
   if (!pr) {
-    const branch = branchName ? getBranchOrTagName(context.ref) : getBranchOrTagName(context.ref);
+    const branch = branchName || getBranchOrTagName(context.ref) ;
     sonarParameters.push(`-Dsonar.branch.name=${branch}`);
     core.info(`
       -- Configuration for branch:

@@ -2305,6 +2305,7 @@ exports.sonarScanner = async () => {
     const projectName = core.getInput('projectName', { required: true });
     const projectKey = core.getInput('projectKey', { required: true });
     const projectVersion = core.getInput('projectVersion', { required: false });
+    const branchName = core.getInput('branchName', { required: false });
     const baseDir = core.getInput('baseDir', { required: false });
     const token = core.getInput('token', { required: true });
     const url = core.getInput('url', { required: true });
@@ -2357,16 +2358,16 @@ exports.sonarScanner = async () => {
     runQualityGate              : ${runQualityGate}
     qualityGateTimeout          : ${qualityGateTimeout}
   `);
-    if (!isCommunityEdition) {
-        const pr = github_1.context.payload.pull_request;
-        if (!pr) {
-            const branchName = getBranchOrTagName(github_1.context.ref);
-            sonarParameters.push(`-Dsonar.branch.name=${branchName}`);
-            core.info(`
+    const pr = github_1.context.payload.pull_request;
+    if (!pr) {
+        const branch = branchName ? getBranchOrTagName(github_1.context.ref) : getBranchOrTagName(github_1.context.ref);
+        sonarParameters.push(`-Dsonar.branch.name=${branch}`);
+        core.info(`
       -- Configuration for branch:
-         branchName               : ${branchName}
+         branchName               : ${branch}
       `);
-        }
+    }
+    if (!isCommunityEdition) {
         if (enablePullRequestDecoration && pr) {
             core.info(`
       -- Configuration for pull request decoration:
