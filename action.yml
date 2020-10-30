@@ -18,6 +18,10 @@ inputs:
     description: "Sonar Project Version"
     required: false
 
+  branchName:
+    description: "The branch you are working on"
+    required: false;
+
   baseDir:
     description: "Project Base Directory"
     required: false

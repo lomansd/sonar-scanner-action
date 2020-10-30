@@ -12,6 +12,7 @@ export const sonarScanner = async () => {
   const projectName = core.getInput('projectName', { required: true });
   const projectKey = core.getInput('projectKey', { required: true });
   const projectVersion = core.getInput('projectVersion', { required: false });
+  const branchName = core.getInput('branchName', { required: false });
   const baseDir = core.getInput('baseDir', { required: false });
   const token = core.getInput('token', { required: true });
   const url = core.getInput('url', { required: true });
@@ -72,17 +73,17 @@ export const sonarScanner = async () => {
     qualityGateTimeout          : ${qualityGateTimeout}
   `);
 
-  if (!isCommunityEdition) {
-    const pr: any = context.payload.pull_request;
-    if (!pr) {
-      const branchName = getBranchOrTagName(context.ref);
-      sonarParameters.push(`-Dsonar.branch.name=${branchName}`);
-      core.info(`
+  const pr: any = context.payload.pull_request;
+  if (!pr) {
+    const branch = branchName ? getBranchOrTagName(context.ref) : getBranchOrTagName(context.ref);
+    sonarParameters.push(`-Dsonar.branch.name=${branch}`);
+    core.info(`
       -- Configuration for branch:
-         branchName               : ${branchName}
+         branchName               : ${branch}
       `);
-    }
+  }
 
+  if (!isCommunityEdition) {
     if (enablePullRequestDecoration && pr) {
       core.info(`
       -- Configuration for pull request decoration:
